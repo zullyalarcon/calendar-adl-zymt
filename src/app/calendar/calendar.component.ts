@@ -17,6 +17,7 @@ export class CalendarComponent implements OnInit {
   year: any;
   month: any;
   day: any;
+  pickList: any[];
   yearList: any[];
   monthList: any[];
   dayList: any[];
@@ -26,6 +27,11 @@ export class CalendarComponent implements OnInit {
   inputDate: any;
   selectYear: any;
   today: Date;
+  pickYear: boolean;
+  pickMonth: boolean;
+  pickDay: boolean;
+  dayNameList: any[];
+  monthNames: any[];
 
   constructor(private renderer: Renderer2, private elRef: ElementRef) { }
 
@@ -34,12 +40,22 @@ export class CalendarComponent implements OnInit {
     this.day = this.day ? this.day : '01';
     this.year = this.year ? this.year : '2019';
     this.yearList = [];
+    this.monthList = [];
+    this.dayList = [];
     this.formatDate = [];
     this.labelYear = 'Seleccione el año';
     this.today = new Date();
     this.orderFormatDate();
+    this.pickYear = false;
+    this.pickMonth = false;
+    this.pickDay = false;
+    this.dayNameList = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    this.monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+      'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
     this.getYears();
+    this.getMonths();
+
   }
 
   orderFormatDate() {
@@ -62,6 +78,7 @@ export class CalendarComponent implements OnInit {
           {name: 'separator', placeholder: '/', required: '', readonly: 'readonly', tabIndex: '-1', type: 'text'},
           {name: 'month', placeholder: 'MES', required: 'required', readonly: '', tabIndex: '3', type: 'number'}
         ]
+
         this.separator = '/';
         break;
       case 'DD/MM/YYYY':
@@ -117,6 +134,25 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  daysMaxInMonth(month, year) {
+      return 32 - new Date(year, month, 32).getDate();
+  }
+
+  getMonths() {
+    for (let m = 1; m <= 12; m++) {
+      this.monthList.push(m + '-' + this.monthNames[m - 1]);
+    }
+  }
+
+  getMonthWithDays() {
+    this.dayList = [];
+    const maxDay = this.daysMaxInMonth(this.month, this.year);
+    const firstDay = (new Date(this.month, this.year)).getDay();
+    for (let d = 1; d <= maxDay + 1; d++) {
+      this.dayList.push(d < 10 ? '0' + d : d);
+    }
+  }
+
   searchDate(event) {
     let arrayEvent;
     let arrayEventSuggestions;
@@ -141,4 +177,26 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  focusDisplay(eventF) {
+
+    if (eventF.target.id === 'year') {
+      this.pickList = this.yearList;
+      this.pickYear = true;
+      this.pickMonth = false;
+      this.pickDay = false;
+    } else {
+      if (eventF.target.id === 'month') {
+        this.pickList = this.monthList;
+        this.pickYear = false;
+        this.pickMonth = true;
+        this.pickDay = false;
+      } else {
+        this.getMonthWithDays();
+        this.pickList = this.dayList;
+        this.pickYear = false;
+        this.pickMonth = false;
+        this.pickDay = true;
+      }
+    }
+  }
 }
