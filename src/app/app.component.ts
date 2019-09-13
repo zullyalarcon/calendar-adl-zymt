@@ -21,12 +21,12 @@ export class AppComponent {
         'YYYY-MM-DD' ];
 
   formG = new FormGroup({
-      format: new FormControl(),
+    formatSel: new FormControl(),
     }
   );
 
   showDate() {
     this.outFormat = true;
-    this.formatText = this.formG.value.format.value;
+    this.formatText = this.formG.value.formatSel.value;
   }
 }

@@ -210,6 +210,7 @@ export class CalendarComponent implements OnInit {
   }
 
   focusDisplay(eventF) {
+    console.log(eventF);
     if (eventF.target.id === 'year') {
       this.pickList = this.yearList;
       this.pickYear = true;
