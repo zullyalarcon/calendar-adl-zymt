@@ -1,5 +1,15 @@
+  
+  <input *ngFor = "let input of formatDate;" 
+    id="{{input.name}}" 
+    placeholder="{{input.placeholder}}" 
+    class="{{input.name}}" required="{{input.required}}" 
+    readonly="{{input.readonly}}"
+    tabindex="{{input.tabIndex}}"
+    (keypress)="searchDate($event)"
+  />
 
   <ul>
     <li *ngFor="let item of yearList;">{{ item }}</li>
   </ul>
 
+  <p>{{ inputDate }}</p>
