@@ -7,8 +7,8 @@
     </div>
     <form class="form-group" formGroup="formG">
         <div class="form-group">
-            <label for="format">Selecciona el formato de salida:  </label>
-            <select class="form-control" id="format" required>
+            <label for="formatSel">Selecciona el formato de salida:  </label>
+            <select class="form-control" id="formatSel" required>
                 <option *ngFor="let item of comboFormats" [value]="item">{{ item }}</option>
             </select>
         </div>
