@@ -196,6 +196,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       this.month = event.target.value;
       this.selectMonth = arrayEventSuggestions[0].id;
       (document.getElementById('month') as HTMLInputElement).disabled = false;
+      (document.getElementById('day') as HTMLInputElement).disabled = false;
     }
 
     if (event.target.id === 'year' && arrayEventSuggestions.length === 0 ) {
