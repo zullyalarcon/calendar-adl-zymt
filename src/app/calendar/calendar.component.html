@@ -29,17 +29,17 @@
     </div>
     <div class="picker--display picker_list" *ngIf="pickYear">
       <ul class="picker--display picker_ul">
-        <li class="picker_il"*ngFor="let item of yearList;" (click)="selectItem(item, 'y')"><span [ngClass]="{'selected': item === selectYear }">{{ item }}</span></li>
+        <li class="picker_il picker_il--wy" *ngFor="let item of yearList;" (click)="selectItem(item, 'y')"><span [ngClass]="{'picker_il--selected': item === selectYear }">{{ item }}</span></li>
       </ul>
     </div>
     <div class="picker--display picker_list" *ngIf="pickMonth">
       <ul class="picker--display picker_ul">
-        <li class="picker_il"*ngFor="let item of monthList;" (click)="selectItem(item, 'm')"><span [ngClass]="{'selected': item === selectMonth }">{{ item }}</span></li>
+        <li class="picker_il picker_il--wm" *ngFor="let item of monthList;" (click)="selectItem(item, 'm')"><span [ngClass]="{'picker_il--selected': item === selectMonth }">{{ item }}</span></li>
       </ul>
     </div>
     <div class="picker--display picker_list" *ngIf="pickDay">
       <ul class="picker--display picker_ul">
-        <li class="picker_il"*ngFor="let item of dayList;" (click)="selectItem(item, 'd')"><span [ngClass]="{'selected': item === selectDay }">{{ item }}</span></li>
+        <li class="picker_il picker_il--d" *ngFor="let item of dayList;" (click)="selectItem(item, 'd')"><span [ngClass]="{'picker_il--selected': item === selectDay }">{{ item }}</span></li>
       </ul>
     </div>
   </div>
