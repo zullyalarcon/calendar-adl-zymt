@@ -10,22 +10,25 @@
         readonly="{{input.readonly}}"
         tabindex="{{input.tabIndex}}"
         (keypress)="searchDate($event)"
+        (focus)="focusDisplay($event)"
       />
     </div>
   </div>
   <div class="picker--display">
     <div>
-      <p class="picker_title">Selecciona el año</p>
+      <p class="picker_title" *ngIf="pickYear">Selecciona el año</p>
+      <p class="picker_title" *ngIf="pickMonth">Selecciona el mes</p>
+      <p class="picker_title" *ngIf="pickDay">Selecciona el día</p>
     </div>   
-    <div *ngIf="dayPick">
+    <div *ngIf="pickDay">
       <ul class="picker--display picker_ul">
         <li class="picker_il" *ngFor="let item of dayNameList;">{{ item }}</li>
       </ul>
     </div>
     <div class="picker--display picker_list">
       <ul class="picker--display picker_ul">
-        <li class="picker_il"*ngFor="let item of yearList;">{{ item }}</li>
-      </ul>
+        <li class="picker_il" *ngFor="let item of pickList;">{{ item }}</li>
+      </ul> 
     </div>
   </div>
 </div>
