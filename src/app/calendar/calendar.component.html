@@ -4,7 +4,8 @@
     <label class="dateInput dateInput_label">Fecha</label>
     <div class="dateInput dateInput_input">
         <input *ngFor = "let input of formatDate;" 
-          id="{{input.name}}" 
+          id="{{input.name}}"
+          aria-required="true"
           placeholder="{{input.placeholder}}" 
           class="{{input.name}} {{invalid}}"
           required="{{input.required}}" 
@@ -39,7 +40,10 @@
     </div>
     <div class="picker--display picker_list" *ngIf="pickDay">
       <ul class="picker--display picker_ul">
-        <li class="picker_il picker_il--d" *ngFor="let item of dayList;" (click)="selectItem(item, 'd')"><span [ngClass]="{'picker_il--selected': item === selectDay }">{{ item }}</span></li>
+        <li class="picker_il picker_il--d" *ngFor="let item of dayListEmpty;"></li>
+        <li class="picker_il picker_il--d"  *ngFor="let item of dayList;" (click)="selectItem(item, 'd')">
+          <span [ngClass]="{'picker_il--selected': item === selectDay }">{{ item }}</span>
+        </li>
       </ul>
     </div>
   </div>
