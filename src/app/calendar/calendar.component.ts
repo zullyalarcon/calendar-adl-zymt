@@ -1,6 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -8,7 +6,7 @@ import * as moment from 'moment';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.sass']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, AfterViewInit {
 
   @Input() format;
 
@@ -19,10 +17,12 @@ export class CalendarComponent implements OnInit {
   yearList: any[];
   monthList: any[];
   dayList: any[];
+  dayListEmpty: any[];
   labelYear: string;
   formatDate: any;
   separator: string;
   inputDate: any;
+  selectDay: any;
   selectYear: any;
   selectMonth: any;
   today: Date;
@@ -43,20 +43,25 @@ export class CalendarComponent implements OnInit {
     this.monthList = [];
     this.dayList = [];
     this.formatDate = [];
+    this.dayListEmpty = [];
     this.labelYear = 'Seleccione el año';
     this.today = new Date();
     this.orderFormatDate();
     this.pickYear = false;
     this.pickMonth = false;
     this.pickDay = false;
-    this.dayNameList = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    this.dayNameList = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
     this.monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
       'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     this.invalid = '';
-
     this.getYears();
     this.getMonths();
 
+  }
+
+  ngAfterViewInit() {
+    (document.getElementById('month') as HTMLInputElement).disabled = true;
+    (document.getElementById('day') as HTMLInputElement).disabled = true;
   }
 
   orderFormatDate() {
@@ -125,7 +130,9 @@ export class CalendarComponent implements OnInit {
         this.yearList.push(yearCu);
       }
     } else {
-      this.invalid = 'error-input';
+      // this.invalid = 'error-input';
+      (document.getElementById('month') as HTMLInputElement).value = '';
+      (document.getElementById('day') as HTMLInputElement).value = '';
       for (let i = 0; i < 25; i++) {
         const yearCu = this.today.getFullYear() - i;
         this.yearList.push(yearCu);
@@ -134,7 +141,7 @@ export class CalendarComponent implements OnInit {
   }
 
   daysMaxInMonth(month, year) {
-    return 32 - new Date(year, month, 32).getDate();
+    return 31 - new Date(year, (month - 1), 32).getDate();
   }
 
   getMonths() {
@@ -145,12 +152,15 @@ export class CalendarComponent implements OnInit {
 
   getMonthWithDays() {
     this.dayList = [];
+    this.dayListEmpty = [];
     const maxDay = this.daysMaxInMonth(this.month, this.year);
-    const firstDay = (new Date(this.month, this.year)).getDay();
+    const firstDay = (new Date(this.year, (this.month - 1))).getDay();
     for (let d = 1; d <= maxDay + 1; d++) {
-      this.dayList.push(d < 10 ? '0' + d : d);
+      this.dayList.push(d < 10 ? '0' + d : d.toString());
     }
-    console.log(firstDay);
+    for (let i = 1; i <= firstDay; i++) {
+      this.dayListEmpty.push(i);
+    }
   }
 
   searchDate(event) {
@@ -176,8 +186,8 @@ export class CalendarComponent implements OnInit {
 
       arrayEventSuggestions = arrayEvent.filter(function(el) {
         const regex = event.target.value;
-        const string = (event.target.value < 10) ? regex.replace(/0/g, '') : regex;
-        const re = new RegExp(`^${string}`, 'i');
+        const replaceMonth = (regex < 10) ? regex.replace(/0/g, '') : regex;
+        const re = new RegExp(`^${replaceMonth}`, 'i');
         if ( re.test(el.id) ) {
           return el;
         }
@@ -185,11 +195,28 @@ export class CalendarComponent implements OnInit {
 
       this.month = event.target.value;
       this.selectMonth = arrayEventSuggestions[0].id;
+      (document.getElementById('month') as HTMLInputElement).disabled = false;
     }
 
     if (event.target.id === 'year' && arrayEventSuggestions.length === 0 ) {
       this.year = event.target.value;
       this.getYears();
+    }
+
+    if (event.target.id === 'day') {
+      arrayEvent = this.dayList;
+
+      arrayEventSuggestions = arrayEvent.filter(function(el) {
+        const regex = event.target.value;
+        const replaceDay = (regex < 10) ? '0' + regex : regex;
+        const re = new RegExp(`^${replaceDay}`, 'i');
+        if ( re.test(el) ) {
+          return el;
+        }
+      });
+
+      this.day = event.target.value;
+      this.selectDay = arrayEventSuggestions[0];
     }
   }
 
@@ -205,7 +232,9 @@ export class CalendarComponent implements OnInit {
       this.month = event;
     }
     if (value === 'd') {
+      (document.getElementById('day') as HTMLInputElement).value = event;
       this.day = event;
+      this.selectDay = event;
     }
   }
 
