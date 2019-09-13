@@ -2,12 +2,11 @@
 .calendar
     font-family: $text-font
     display: block
-    justify-content: center
-    align-items: center
+    align-items: left
     overflow-x: hidden
     margin: 0 auto
-    text-align: center
-    width: 100%
+    width: 20em
+    padding: 10%
 
 .picker
     width: 40%
@@ -20,19 +19,39 @@
 
 .picker_title
     font-size: $f12
-
-.picker_list
-    font-size: $f14
+    text-align: center
     align-items: center
 
-.picker_ul
-    text-align: left
+.picker_list
+    align-items: center
+    width: 100%
 
+.picker_ul
+    height: 50%
+    width: 100%
+    font-size: $f14
+    text-align: left
+    list-style-type: none
+    display: flex
+    padding-left: 0em
+    white-space: pre
+    overflow-wrap: none
+
+.picker_il
+    padding-right: 0.8em
+    
 .dateInput
-    width: 20%
+    width: 100%
     position: relative
 
+.dateInput_label
+    width: 100%
+    padding: 2%
+    margin-bottom: 2em
+    text-align: left
 .dateInput_input
     padding: 2%
+    margin-top: 1em
+    margin-bottom: 1em
 
 

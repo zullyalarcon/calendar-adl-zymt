@@ -1,16 +1,17 @@
 <div class="calendar">
+  <div class="dateInput">
+    <label class="dateInput dateInput_label">Fecha</label>
+    <input type=text class="dateInput dateInput_input"/>
+  </div>
   <div class="picker--display">
-    <div class="picker--display picker_title">
-      Selecciona el año
+    <div>
+      <p class="picker--display picker_title">Selecciona el año</p>
     </div>
     <div class="picker--display picker_list">
       <ul class="picker--display picker_ul">
-        <li *ngFor="let item of yearList;">{{ item }}</li>
+        <li class="picker--display picker_il"*ngFor="let item of yearList;">{{ item }}</li>
       </ul>
     </div>
-  </div>
-  <div class="dateInput">
-    <input type=text class="dateInput dateInput_input"/>
   </div>
 </div>
   
