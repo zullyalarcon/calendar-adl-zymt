@@ -34,7 +34,7 @@
     </div>
     <div class="picker--display picker_list" *ngIf="pickMonth">
       <ul class="picker--display picker_ul">
-        <li class="picker_il"*ngFor="let item of monthList;" (click)="selectItem(item, 'm')"><span [ngClass]="{'selected': item === selectMonth }">{{ item }}</span></li>
+        <li class="picker_il"*ngFor="let item of monthList" (click)="selectItem(item.id, 'm')"><span [ngClass]="{'selected': item.id === selectMonth }">{{ item.name }}</span></li>
       </ul>
     </div>
     <div class="picker--display picker_list" *ngIf="pickDay">

@@ -24,6 +24,7 @@ export class CalendarComponent implements OnInit {
   separator: string;
   inputDate: any;
   selectYear: any;
+  selectMonth: any;
   today: Date;
   pickYear: boolean;
   pickMonth: boolean;
@@ -138,7 +139,7 @@ export class CalendarComponent implements OnInit {
 
   getMonths() {
     for (let m = 1; m <= 12; m++) {
-      this.monthList.push(m + '-' + this.monthNames[m - 1]);
+      this.monthList.push({id: m, name: this.monthNames[m - 1]});
     }
   }
 
@@ -158,22 +159,37 @@ export class CalendarComponent implements OnInit {
 
     if (event.target.id === 'year') {
       arrayEvent = this.yearList;
+
+      arrayEventSuggestions = arrayEvent.filter(function(el) {
+        const re = new RegExp(`^${event.target.value}`, 'i');
+        if ( re.test(el) ) {
+          return el;
+        }
+      });
+
+      this.year = event.target.value;
+      this.selectYear = arrayEventSuggestions[0];
     }
 
-    arrayEventSuggestions = arrayEvent.filter(function(el) {
-      const re = new RegExp(`^${event.target.value}`, 'i');
-      if ( re.test(el) ) {
-        return el;
-      }
-    });
+    if (event.target.id === 'month') {
+      arrayEvent = this.monthList;
+
+      arrayEventSuggestions = arrayEvent.filter(function(el) {
+        const regex = event.target.value;
+        const string = (event.target.value < 10) ? regex.replace(/0/g, '') : regex;
+        const re = new RegExp(`^${string}`, 'i');
+        if ( re.test(el.id) ) {
+          return el;
+        }
+      });
+
+      this.month = event.target.value;
+      this.selectMonth = arrayEventSuggestions[0].id;
+    }
 
     if (event.target.id === 'year' && arrayEventSuggestions.length === 0 ) {
       this.year = event.target.value;
       this.getYears();
-    }
-    if (event.target.id === 'year') {
-      this.year = event.target.value;
-      this.selectYear = arrayEventSuggestions[0];
     }
   }
 
@@ -184,6 +200,8 @@ export class CalendarComponent implements OnInit {
       this.year = event;
     }
     if (value === 'm') {
+      (document.getElementById('month') as HTMLInputElement).value = event;
+      this.selectMonth = event;
       this.month = event;
     }
     if (value === 'd') {
