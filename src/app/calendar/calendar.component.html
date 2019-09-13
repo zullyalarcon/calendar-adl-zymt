@@ -1,15 +1,30 @@
-  
-  <input *ngFor = "let input of formatDate;" 
-    id="{{input.name}}" 
-    placeholder="{{input.placeholder}}" 
-    class="{{input.name}}" required="{{input.required}}" 
-    readonly="{{input.readonly}}"
-    tabindex="{{input.tabIndex}}"
-    (keypress)="searchDate($event)"
-  />
 
-  <ul>
-    <li *ngFor="let item of yearList;">{{ item }}</li>
-  </ul>
-
-  <p>{{ inputDate }}</p>
+<div class="calendar">
+  <div class="dateInput">
+    <label class="dateInput dateInput_label">Fecha</label>
+      <input *ngFor = "let input of formatDate;" 
+      id="{{input.name}}" 
+      placeholder="{{input.placeholder}}" 
+      class="{{input.name}}" required="{{input.required}}" 
+      readonly="{{input.readonly}}"
+      tabindex="{{input.tabIndex}}"
+      (keypress)="searchDate($event)"
+    />
+  </div>
+  <div class="picker--display">
+    <div>
+      <p class="picker_title">Selecciona el año</p>
+    </div>   
+    <div *ngIf="dayPick">
+      <ul class="picker--display picker_ul">
+        <li class="picker_il" *ngFor="let item of dayNameList;">{{ item }}</li>
+      </ul>
+    </div>
+    <div class="picker--display picker_list">
+      <ul class="picker--display picker_ul">
+        <li class="picker_il"*ngFor="let item of yearList;">{{ item }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<p>{{ inputDate }}</p>
