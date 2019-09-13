@@ -1,3 +1,15 @@
 @function rem($sizeValue)
   $remy: ($sizeValue / 16)+rem
   @return $remy
+
+@function primaryColor($theme)
+    $primaryColor: $grey
+    @if($theme = 'green')
+        $primaryColor: $green
+    @return $primaryColor
+
+@function secondColor($theme)
+    $secondColor: $black
+    @if($theme = 'green')
+        $secondColor: $green-medium
+    @return $secondColor

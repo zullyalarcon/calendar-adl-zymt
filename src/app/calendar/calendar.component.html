@@ -23,7 +23,7 @@
       <p class="picker_title" *ngIf="pickDay">Selecciona el día</p>
     </div>   
     <div *ngIf="pickDay">
-      <ul class="picker--display picker_ul">
+      <ul class="picker_ul picker_ul--days">
         <li class="picker_il" *ngFor="let item of dayNameList;">{{ item }}</li>
       </ul>
     </div>
