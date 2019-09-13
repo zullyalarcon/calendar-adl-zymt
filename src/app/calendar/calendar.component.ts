@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import * as moment from 'moment';
 
@@ -10,9 +11,6 @@ import * as moment from 'moment';
 export class CalendarComponent implements OnInit {
 
   @Input() format;
-  @ViewChild('year') yearEl: ElementRef;
-  @ViewChild('month') monthEl: ElementRef;
-  @ViewChild('day') dayEl: ElementRef;
 
   year: any;
   month: any;
@@ -32,8 +30,9 @@ export class CalendarComponent implements OnInit {
   pickDay: boolean;
   dayNameList: any[];
   monthNames: any[];
+  invalid: string;
 
-  constructor(private renderer: Renderer2, private elRef: ElementRef) { }
+  constructor() { }
 
   ngOnInit() {
     this.month = this.month ? this.month : '01';
@@ -52,6 +51,7 @@ export class CalendarComponent implements OnInit {
     this.dayNameList = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
     this.monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
       'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    this.invalid = '';
 
     this.getYears();
     this.getMonths();
@@ -77,8 +77,7 @@ export class CalendarComponent implements OnInit {
           {name: 'day', placeholder: 'DIA', required: 'required', readonly: '', tabIndex: '2', type: 'number'},
           {name: 'separator', placeholder: '/', required: '', readonly: 'readonly', tabIndex: '-1', type: 'text'},
           {name: 'month', placeholder: 'MES', required: 'required', readonly: '', tabIndex: '3', type: 'number'}
-        ]
-
+        ];
         this.separator = '/';
         break;
       case 'DD/MM/YYYY':
@@ -115,18 +114,17 @@ export class CalendarComponent implements OnInit {
   }
 
   getYears() {
-
     this.yearList = [];
     const paramDate = new Date(`${this.year}` + `${this.separator}` + `${this.month}` + `${this.separator}` + `${this.day}`);
 
     if (paramDate.getFullYear() >= 1920 && paramDate.getFullYear() <= 2019) {
+      this.invalid = '';
       for (let i = 0; i < 25; i++) {
         const yearCu = paramDate.getFullYear() - i;
         this.yearList.push(yearCu);
       }
     } else {
-      this.renderer.addClass(this.yearEl.nativeElement, 'error-input');
-      this.yearEl.nativeElement.value('');
+      this.invalid = 'error-input';
       for (let i = 0; i < 25; i++) {
         const yearCu = this.today.getFullYear() - i;
         this.yearList.push(yearCu);
@@ -135,7 +133,7 @@ export class CalendarComponent implements OnInit {
   }
 
   daysMaxInMonth(month, year) {
-      return 32 - new Date(year, month, 32).getDate();
+    return 32 - new Date(year, month, 32).getDate();
   }
 
   getMonths() {
@@ -151,6 +149,7 @@ export class CalendarComponent implements OnInit {
     for (let d = 1; d <= maxDay + 1; d++) {
       this.dayList.push(d < 10 ? '0' + d : d);
     }
+    console.log(firstDay);
   }
 
   searchDate(event) {
@@ -173,12 +172,26 @@ export class CalendarComponent implements OnInit {
       this.getYears();
     }
     if (event.target.id === 'year') {
+      this.year = event.target.value;
       this.selectYear = arrayEventSuggestions[0];
     }
   }
 
-  focusDisplay(eventF) {
+  selectItem(event, value) {
+    if (value === 'y') {
+      (document.getElementById('year') as HTMLInputElement).value = event;
+      this.selectYear = event;
+      this.year = event;
+    }
+    if (value === 'm') {
+      this.month = event;
+    }
+    if (value === 'd') {
+      this.day = event;
+    }
+  }
 
+  focusDisplay(eventF) {
     if (eventF.target.id === 'year') {
       this.pickList = this.yearList;
       this.pickYear = true;
