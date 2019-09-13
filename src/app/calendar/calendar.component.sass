@@ -5,6 +5,11 @@ input
     width: auto
     padding: 5px
     outline: none
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+    -webkit-appearance: none
+    margin: 0
+
 .separator
     width: 5px
     text-align: center
@@ -13,3 +18,11 @@ input
 .month,
 .day
     width: 25.333%
+.selected
+    background: $blue-list
+    padding: 10px
+    color: $white
+    border-radius: 4px
+
+.error-input
+    border: 1px solid $red

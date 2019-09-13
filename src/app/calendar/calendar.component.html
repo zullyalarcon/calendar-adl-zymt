@@ -9,7 +9,8 @@
         class="{{input.name}}" required="{{input.required}}" 
         readonly="{{input.readonly}}"
         tabindex="{{input.tabIndex}}"
-        (keypress)="searchDate($event)"
+        type="{{input.type}}"
+        (keyup)="searchDate($event)"
       />
     </div>
   </div>
@@ -24,9 +25,9 @@
     </div>
     <div class="picker--display picker_list">
       <ul class="picker--display picker_ul">
-        <li class="picker_il"*ngFor="let item of yearList;">{{ item }}</li>
+        <li class="picker_il"*ngFor="let item of yearList;"><span [ngClass]="{'selected': item === selectYear }">{{ item }}</span></li>
       </ul>
     </div>
   </div>
 </div>
-<p>{{ inputDate }}</p>
+
