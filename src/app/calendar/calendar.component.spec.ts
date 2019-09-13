@@ -21,6 +21,12 @@ describe('CalendarComponent', () => {
   });
 
   it('should create', () => {
+    component.format = 'YYYY/MM/DD';
     expect(component).toBeTruthy();
+  });
+
+  it('should call orderFormatDate', () => {
+    component.format = 'YYYY/MM/DD';
+    expect(component.orderFormatDate()).toBeUndefined();
   });
 });

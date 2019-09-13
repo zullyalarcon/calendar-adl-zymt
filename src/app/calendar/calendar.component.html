@@ -24,7 +24,7 @@
     </div>   
     <div *ngIf="pickDay">
       <ul class="picker_ul picker_ul--days">
-        <li class="picker_il" *ngFor="let item of dayNameList;">{{ item }}</li>
+        <li class="picker_il picker_il--altercolor" *ngFor="let item of dayNameList;">{{ item }}</li>
       </ul>
     </div>
     <div class="picker--display picker_list" *ngIf="pickYear">
