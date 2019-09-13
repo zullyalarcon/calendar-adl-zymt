@@ -1,5 +1,17 @@
-
-  <ul>
-    <li *ngFor="let item of yearList;">{{ item }}</li>
-  </ul>
+<div class="calendar">
+  <div class="picker--display">
+    <div class="picker--display picker_title">
+      Selecciona el año
+    </div>
+    <div class="picker--display picker_list">
+      <ul class="picker--display picker_ul">
+        <li *ngFor="let item of yearList;">{{ item }}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="dateInput">
+    <input type=text class="dateInput dateInput_input"/>
+  </div>
+</div>
+  
 
