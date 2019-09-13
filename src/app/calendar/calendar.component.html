@@ -3,17 +3,17 @@
   <div class="dateInput">
     <label class="dateInput dateInput_label">Fecha</label>
     <div class="dateInput dateInput_input">
-      <input *ngFor = "let input of formatDate;" 
-        id="{{input.name}}" 
-        placeholder="{{input.placeholder}}" 
-        class="{{input.name}}" required="{{input.required}}" 
-        readonly="{{input.readonly}}"
-        tabindex="{{input.tabIndex}}"
-        type="{{input.type}}"
-        (keyup)="searchDate($event)"
-        (focus)="focusDisplay($event)"
-
-      />
+        <input *ngFor = "let input of formatDate;" 
+          id="{{input.name}}" 
+          placeholder="{{input.placeholder}}" 
+          class="{{input.name}} {{invalid}}"
+          required="{{input.required}}" 
+          readonly="{{input.readonly}}"
+          tabindex="{{input.tabIndex}}"
+          type="{{input.type}}"
+          (keyup)="searchDate($event)"
+          (focus)="focusDisplay($event)"
+        />
     </div>
   </div>
   <div class="picker--display">
@@ -27,9 +27,19 @@
         <li class="picker_il" *ngFor="let item of dayNameList;">{{ item }}</li>
       </ul>
     </div>
-    <div class="picker--display picker_list">
+    <div class="picker--display picker_list" *ngIf="pickYear">
       <ul class="picker--display picker_ul">
-        <li class="picker_il"*ngFor="let item of pickList;"><span [ngClass]="{'selected': item === selectYear }">{{ item }}</span></li>
+        <li class="picker_il"*ngFor="let item of yearList;" (click)="selectItem(item, 'y')"><span [ngClass]="{'selected': item === selectYear }">{{ item }}</span></li>
+      </ul>
+    </div>
+    <div class="picker--display picker_list" *ngIf="pickMonth">
+      <ul class="picker--display picker_ul">
+        <li class="picker_il"*ngFor="let item of monthList;" (click)="selectItem(item, 'm')"><span [ngClass]="{'selected': item === selectMonth }">{{ item }}</span></li>
+      </ul>
+    </div>
+    <div class="picker--display picker_list" *ngIf="pickDay">
+      <ul class="picker--display picker_ul">
+        <li class="picker_il"*ngFor="let item of dayList;" (click)="selectItem(item, 'd')"><span [ngClass]="{'selected': item === selectDay }">{{ item }}</span></li>
       </ul>
     </div>
   </div>
