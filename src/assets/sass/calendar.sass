@@ -5,17 +5,22 @@
     align-items: left
     overflow-x: hidden
     margin: 0 auto
-    width: 20em
-    padding: 10%
+    width: 25em
+    padding: 2em 2em
+    overflow: hidden
 
 .picker
-    width: 40%
+    width: 20em
     display: none
+    border-color: $white
+    border-style: unset
 
 .picker--display
     width: 40%
     position: relative
     display: inline
+    overflow-y: scroll
+    text-align: center
 
 .picker_title
     font-size: $f12
@@ -27,7 +32,7 @@
     width: 100%
 
 .picker_ul
-    height: 100px
+    height: 10em
     width: 100%
     font-size: $f14
     text-align: left
@@ -36,9 +41,35 @@
     padding-left: 0em
     flex-wrap: wrap
 
+.picker_ul--days
+    height: 3em
+    text-align: center
+    align-items: center
+    color: $secondColor
+    font-size: $f10
+
 .picker_il
     padding: 10px
     color: $black
+    text-align: center
+    min-width: 25px
+    margin: 5px
+
+.picker_il--wy
+    min-width: 30px
+
+.picker_il--wm
+    min-width: 85px
+
+.picker_il--d
+    min-width: 25px
+
+.picker_il--selected
+    background: $secondColor
+    color: $grey
+    border-radius: 4px
+    padding: 5px
+    margin: -5px
 
 .picker_il--altercolor
     font-size: rem(12)
@@ -49,16 +80,20 @@
 .dateInput
     width: 100%
     position: relative
+    border-color: $primaryColor
 
 .dateInput_label
     width: 100%
     padding: 2%
     margin-bottom: 2em
     text-align: left
+
 .dateInput_input
     width: 100%
     padding: 2%
     margin-top: 1em
     margin-bottom: 1em
+    border: 1px solid $primaryColor
+    border-radius: 5px
 
 
