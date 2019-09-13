@@ -12,7 +12,15 @@ export class CalendarComponent implements OnInit {
   @Input() year;
   @Input() month;
   @Input() day;
+  @Input() format;
+
   yearList: any[];
+  monthList: any[];
+  dayList: any[];
+  labelYear: string;
+  formatDate: any;
+  separator: string;
+  inputDate: any;
 
   constructor() { }
 
@@ -21,18 +29,117 @@ export class CalendarComponent implements OnInit {
     this.day = this.day ? this.day : '01';
     this.year = this.year ? this.year : '2000';
     this.yearList = [];
-
-    const paramDate = new Date(`${this.year}` + '/' + `${this.month}` + '/' + `${this.day}`); 
-    // moment(`${this.year}` + '/' + `${this.month}` + '/' + `${this.day}`);
+    this.formatDate = [];
+    this.labelYear = 'Seleccione el año';
     const today = new Date();
-    if (this.year) {
-      const yearT = today.getFullYear() - paramDate.getFullYear();
-      for (let i = 0; i < yearT; i++) {
-        const yearCu = today.getFullYear() - i;
-        this.yearList.push(yearCu);
-      }
+    this.orderFormatDate();
+
+    const paramDate = new Date(`${this.year}` + `${this.separator}` + `${this.month}` + `${this.separator}` + `${this.day}`);
+    this.getYears(today, paramDate);
+
+    this.inputDate = paramDate;
+  }
+
+  orderFormatDate() {
+    switch (this.format) {
+      case 'YYYY/MM/DD':
+        this.formatDate = [
+          {name: 'year', placeholder: 'AÑO', required: 'required', readonly: '', tabIndex: '1'},
+          {name: 'separator', placeholder: '/', required: '', readonly: 'readonly', tabIndex: '-1'},
+          {name: 'month', placeholder: 'MES', required: 'required', readonly: '', tabIndex: '2'},
+          {name: 'separator', placeholder: '/', required: '', readonly: 'readonly', tabIndex: '-1'},
+          {name: 'day', placeholder: 'DIA', required: 'required', readonly: '', tabIndex: '3'}
+        ];
+        this.separator = '/';
+        break;
+      case 'YYYY/DD/MM':
+        this.formatDate = [
+          {name: 'year', placeholder: 'AÑO', required: 'required', readonly: '', tabIndex: '1'},
+          {name: 'separator', placeholder: '/', required: '', readonly: 'readonly', tabIndex: '-1'},
+          {name: 'day', placeholder: 'DIA', required: 'required', readonly: '', tabIndex: '2'},
+          {name: 'separator', placeholder: '/', required: '', readonly: 'readonly', tabIndex: '-1'},
+          {name: 'month', placeholder: 'MES', required: 'required', readonly: '', tabIndex: '3'}
+        ]
+        this.separator = '/';
+        break;
+      case 'DD/MM/YYYY':
+        this.formatDate = [
+          {name: 'day', placeholder: 'DIA', required: 'required', readonly: '', tabIndex: '1'},
+          {name: 'separator', placeholder: '/', required: '', readonly: 'readonly', tabIndex: '-1'},
+          {name: 'month', placeholder: 'MES', required: 'required', readonly: '', tabIndex: '2'},
+          {name: 'separator', placeholder: '/', required: '', readonly: 'readonly', tabIndex: '-1'},
+          {name: 'year', placeholder: 'AÑO', required: 'required', readonly: '', tabIndex: '3'}
+        ];
+        this.separator = '/';
+        break;
+      case 'MM/DD/YYYY':
+        this.formatDate = [
+          {name: 'month', placeholder: 'MES', required: 'required', readonly: '', tabIndex: '1'},
+          {name: 'separator', placeholder: '/', required: '', readonly: 'readonly', tabIndex: '-1'},
+          {name: 'day', placeholder: 'DIA', required: 'required', readonly: '', tabIndex: '2'},
+          {name: 'separator', placeholder: '/', required: '', readonly: 'readonly', tabIndex: '-1'},
+          {name: 'year', placeholder: 'AÑO', required: 'required', readonly: '', tabIndex: '3'}
+        ];
+        this.separator = '/';
+        break;
+      case 'YYYY-MM-DD':
+        this.formatDate = [
+          {name: 'year', placeholder: 'AÑO', required: 'required', readonly: '', tabIndex: '1'},
+          {name: 'separator', placeholder: '-', required: '', readonly: 'readonly', tabIndex: '-1'},
+          {name: 'month', placeholder: 'MES', required: 'required', readonly: '', tabIndex: '2'},
+          {name: 'separator', placeholder: '-', required: '', readonly: 'readonly', tabIndex: '-1'},
+          {name: 'day', placeholder: 'DIA', required: 'required', readonly: '', tabIndex: '3'}
+        ];
+        this.separator = '-';
+        break;
     }
-    // console.log(now);
+  }
+
+  getYears(t: Date, p: Date) {
+    let yearT = t.getFullYear() - p.getFullYear();
+
+    if (yearT <= 0 ) {
+      yearT = 20;
+    }
+
+    for (let i = 0; i < yearT; i++) {
+      const yearCu = t.getFullYear() - i;
+      this.yearList.push(yearCu);
+    }
+  }
+
+  searchDate(event) {
+    let arrayEvent;
+    let arrayEventSuggestions;
+
+    if (event.target.id === 'year') {
+      arrayEvent = this.yearList;
+    }
+
+    arrayEventSuggestions = arrayEvent.filter(function(el) {
+      let regex = '';
+
+      const pattern = /[0-9]/;
+      const inputChar = String.fromCharCode(event.charCode);
+      regex = regex + inputChar;
+
+      console.log(regex);
+
+      if (!pattern.test(inputChar)) {
+        event.preventDefault();
+      } else {
+        const re = new RegExp(`${regex}`, 'i');
+        if ( re.test(el) ) {
+          return el;
+        }
+      }
+    });
+
+    if (event.target.id === 'year') {
+      this.yearList = arrayEventSuggestions;
+    }
+
+    console.log(this.yearList);
   }
 
 }

@@ -1,7 +1,15 @@
+
 <div class="calendar">
   <div class="dateInput">
     <label class="dateInput dateInput_label">Fecha</label>
-    <input type=text class="dateInput dateInput_input"/>
+      <input *ngFor = "let input of formatDate;" 
+      id="{{input.name}}" 
+      placeholder="{{input.placeholder}}" 
+      class="{{input.name}}" required="{{input.required}}" 
+      readonly="{{input.readonly}}"
+      tabindex="{{input.tabIndex}}"
+      (keypress)="searchDate($event)"
+    />
   </div>
   <div class="picker--display">
     <div>
@@ -19,5 +27,4 @@
     </div>
   </div>
 </div>
-  
-
+<p>{{ inputDate }}</p>
