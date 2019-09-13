@@ -5,7 +5,12 @@
   </div>
   <div class="picker--display">
     <div>
-      <p class="picker--display picker_title">Selecciona el año</p>
+      <p class="picker_title">Selecciona el año</p>
+    </div>   
+    <div *ngIf="dayPick">
+      <ul class="picker--display picker_ul">
+        <li class="picker_il" *ngFor="let item of dayNameList;">{{ item }}</li>
+      </ul>
     </div>
     <div class="picker--display picker_list">
       <ul class="picker--display picker_ul">
