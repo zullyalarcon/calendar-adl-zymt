@@ -17,7 +17,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         CalendarComponent
-      ],
+      ]
     }).compileComponents();
   }));
 
@@ -25,5 +25,12 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
+  });
+
+  it('should call selectFormat', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+    const format = 'YYYY/MM/DD';
+    expect(app.selectFormat(format)).toBeUndefined();
   });
 });
