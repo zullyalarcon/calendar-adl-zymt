@@ -17,12 +17,12 @@ import { CalendarComponent } from './calendar/calendar.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [CalendarComponent]
+  // entryComponents: [CalendarComponent]
 })
 export class AppModule {
-  constructor(private injector: Injector) {
+  /* constructor(private injector: Injector) {
     const el = createCustomElement(CalendarComponent, { injector });
     customElements.define('calendar-zymt', el);
   }
-  ngDoBootstrap() {}
+  ngDoBootstrap() {} */
 }

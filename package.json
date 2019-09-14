@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:element": "ng build --prod --output-hashing=none && node ./concat-build.js"
+    "build:element": "ng build --prod --output-hashing none && node ./concat-build.js"
   },
   "private": true,
   "dependencies": {
