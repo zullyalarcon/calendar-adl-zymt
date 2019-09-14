@@ -2,27 +2,16 @@
 <h2 class="title">Calendario ADL</h2>
 <div>
     <div>
-        <app-calendar [formatInput]="formatInputDate" [formatOutput]="formatOutputDate"></app-calendar>
-    </div>
-    <form class="form-group" formGroup="formG">
-        <div class="form-group">
-            <label for="formatSel demoCalendar">Selecciona el formato de entrada:  </label>
-            <select class="form-control demoCalendar_select" #formatSel (change)="selectFormatI(formatSel.value)">
-                <option *ngFor="let item of comboFormats" [value]="item" >{{ item }}</option>
-            </select>
-        </div>
-        <div class="form-group demoCalendar">
-            <label for="formatSel">Selecciona el formato de salida:  </label>
-            <select class="form-control demoCalendar_select" #formatSelO (change)="selectFormat(formatSelO.value)">
-                <option *ngFor="let item of comboFormats" [value]="item">{{ item }}</option>
-            </select>
-        </div>
-        <button type="button" alt="Ver Fecha Salida" class="demoCalendar_btn" (click)="showDate()">Ver Fecha Salida</button>
-    </form>
-    <div *ngIf="outFormat" class="demoCalendar">
-        <p>
-            Salida con formato: {{ formatOutputDate }} es : {{ outDate }}
-        </p>
+        <form class="form-group" formGroup="formG">
+            <div class="form-group">
+                <label for="formatSel">Selecciona el formato de entrada:  </label>
+                <select class="form-control" #formatSel (change)="selectFormatI(formatSel.value)">
+                    <option *ngFor="let item of comboFormats" [value]="item" >{{ item }}</option>
+                </select>
+            </div>
+        </form>
+        <app-calendar [formatInput]="formatInputDate"></app-calendar>
     </div>
 </div>
 <h5 class="footer">@By ZullyA & YennyG</h5>
+

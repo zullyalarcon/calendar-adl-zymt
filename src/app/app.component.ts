@@ -27,21 +27,7 @@ export class AppComponent {
     formatSel: new FormControl(),
   });
 
-  selectFormat(item) {
-    this.formatOutputDate = item;
-  }
-
   selectFormatI(item) {
-    console.log(item);
     this.formatInputDate = item;
-  }
-
-  outPutF(event) {
-    this.outDate = event;
-  }
-
-  showDate() {
-    this.outFormat = true;
-    this.formatText = this.formG.value.formatSel.value;
   }
 }

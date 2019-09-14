@@ -1,15 +1,16 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.sass']
+  styleUrls: ['./calendar.component.sass'],
+  encapsulation: ViewEncapsulation.Native
 })
+
 export class CalendarComponent implements OnInit, AfterViewInit {
 
   @Input() formatInput;
-  @Input() formatOutput;
 
   year: any;
   month: any;
@@ -67,6 +68,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   orderFormatDate() {
+    console.log(this.formatInput);
     switch (this.formatInput) {
       case 'YYYY/MM/DD':
         this.formatDate = [
@@ -135,7 +137,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       // this.invalid = 'error-input';
       (document.getElementById('month') as HTMLInputElement).value = '';
       (document.getElementById('day') as HTMLInputElement).value = '';
-      (document.getElementById('month') as HTMLInputElement).disabled = true;
       for (let i = 0; i < 25; i++) {
         const yearCu = this.today.getFullYear() - i;
         this.yearList.push(yearCu);
@@ -197,13 +198,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         }
       });
 
-      if (this.month > 12) {
-        this.month = event.target.value;
-        this.selectMonth = arrayEventSuggestions[0].id;
-        (document.getElementById('day') as HTMLInputElement).disabled = false;
-      } else {
-        (document.getElementById('day') as HTMLInputElement).disabled = true;
-      }
+      this.month = event.target.value;
+      this.selectMonth = arrayEventSuggestions[0].id;
+      (document.getElementById('day') as HTMLInputElement).disabled = false;
+
     }
 
     if (event.target.id === 'year' && arrayEventSuggestions.length === 0 ) {
