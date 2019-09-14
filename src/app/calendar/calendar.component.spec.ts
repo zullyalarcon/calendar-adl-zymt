@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CalendarComponent } from './calendar.component';
 import * as moment from 'moment';
 import { EventEmitter } from 'protractor';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
@@ -10,7 +11,8 @@ describe('CalendarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarComponent ]
+      declarations: [ CalendarComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -22,31 +24,43 @@ describe('CalendarComponent', () => {
   });
 
   it('should create', () => {
-    component.format = 'YYYY/MM/DD';
+    component.formatInput = 'YYYY/MM/DD';
+    component.formatOutput = 'YYYY/MM/DD';
+    component.year.value = '2019';
+    component.month.value = '12';
+    component.day.value = '12';
+    component.ngOnInit();
+
     expect(component).toBeTruthy();
 
   });
 
   it('should call orderFormatDate', () => {
-    component.format = 'YYYY/MM/DD';
+    component.formatInput = 'YYYY/MM/DD';
+    component.formatOutput = 'YYYY/MM/DD';
     expect(component.orderFormatDate()).toBeUndefined();
 
-    component.format = 'YYYY/DD/MM';
+    component.formatInput = 'YYYY/DD/MM';
+    component.formatOutput = 'YYYY/MM/DD';
     expect(component.orderFormatDate()).toBeUndefined();
 
-    component.format = 'DD/MM/YYYY';
+    component.formatInput = 'DD/MM/YYYY';
+    component.formatOutput = 'YYYY/MM/DD';
     expect(component.orderFormatDate()).toBeUndefined();
 
-    component.format = 'MM/DD/YYYY';
+    component.formatInput = 'MM/DD/YYYY';
+    component.formatOutput = 'YYYY/MM/DD';
     expect(component.orderFormatDate()).toBeUndefined();
 
-    component.format = 'YYYY-MM-DD';
+    component.formatInput = 'YYYY-MM-DD';
+    component.formatOutput = 'YYYY/MM/DD';
     expect(component.orderFormatDate()).toBeUndefined();
 
   });
 
   it('should call ngOnInit', () => {
-    component.format = 'YYYY/MM/DD';
+    component.formatInput = 'YYYY/MM/DD';
+    component.formatOutput = 'YYYY/MM/DD';
     component.month = '2';
     component.year = '2000';
     component.day = '12';
@@ -54,7 +68,8 @@ describe('CalendarComponent', () => {
   });
 
   it('should call getMonthWithDays', () => {
-    component.format = 'YYYY/MM/DD';
+    component.formatInput = 'YYYY/MM/DD';
+    component.formatOutput = 'YYYY/MM/DD';
     component.month = '2';
     component.year = '2000';
     component.day = '12';
@@ -62,7 +77,8 @@ describe('CalendarComponent', () => {
   });
 
   it('should call focusDisplay', () => {
-    component.format = 'YYYY/MM/DD';
+    component.formatInput = 'YYYY/MM/DD';
+    component.formatOutput = 'YYYY/MM/DD';
     component.month = '2';
     component.year = '2000';
     component.day = '12';
@@ -86,7 +102,8 @@ describe('CalendarComponent', () => {
 
 
   it('should call selectItem', () => {
-    component.format = 'YYYY/MM/DD';
+    component.formatInput = 'YYYY/MM/DD';
+    component.formatOutput = 'YYYY/MM/DD';
     component.month = '2';
     component.year = '2000';
     component.day = '12';
@@ -112,7 +129,8 @@ describe('CalendarComponent', () => {
   });
 
   it('should call searchDate', () => {
-    component.format = 'YYYY/MM/DD';
+    component.formatInput = 'YYYY/MM/DD';
+    component.formatOutput = 'YYYY/MM/DD';
     component.month = '2';
     component.year = '2000';
     component.day = '12';
