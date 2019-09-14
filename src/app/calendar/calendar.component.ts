@@ -5,7 +5,7 @@ import * as moment from 'moment';
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.sass'],
-  encapsulation: ViewEncapsulation.Native
+  // encapsulation: ViewEncapsulation.Native
 })
 
 export class CalendarComponent implements OnInit, AfterViewInit {
