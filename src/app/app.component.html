@@ -3,12 +3,18 @@
 
 <div>
     <div>
-        <app-calendar [format]='"YYYY/MM/DD"'></app-calendar>
+        <app-calendar [formatInput]="formatInputDate" [formatOutput]="formatOutputDate"></app-calendar>
     </div>
     <form class="form-group" formGroup="formG">
         <div class="form-group">
+            <label for="formatSel">Selecciona el formato de entrada:  </label>
+            <select class="form-control" #formatSel (change)="selectFormatI(formatSel.value)">
+                <option *ngFor="let item of comboFormats" [value]="item" >{{ item }}</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label for="formatSel">Selecciona el formato de salida:  </label>
-            <select class="form-control" id="formatSel" required>
+            <select class="form-control" #formatSelO (change)="selectFormat(formatSelO.value)">
                 <option *ngFor="let item of comboFormats" [value]="item">{{ item }}</option>
             </select>
         </div>
@@ -18,6 +24,6 @@
 
 <div *ngIf="outFormat">
     <p>
-        Salida con formato: {{ format }} es : {{ outDate }}
+        Salida con formato {{ formatOutputDate }} es : {{ outDate }}
     </p>
 </div>

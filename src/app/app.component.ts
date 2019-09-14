@@ -12,18 +12,33 @@ export class AppComponent {
   outFormat = false;
   formatText = '';
   outDate = '';
+  formatOutputDate = 'YYYY-MM-DD';
+  formatInputDate = 'YYYY/MM/DD';
 
   comboFormats =
-      [ 'YYYY/MM/DD',
-        'YYYY/DD/MM',
-        'DD/MM/YYYY',
-        'MM/DD/YYYY',
-        'YYYY-MM-DD' ];
+    [ 'YYYY/MM/DD',
+      'YYYY/DD/MM',
+      'DD/MM/YYYY',
+      'MM/DD/YYYY',
+      'YYYY-MM-DD'
+    ];
 
   formG = new FormGroup({
     formatSel: new FormControl(),
-    }
-  );
+  });
+
+  selectFormat(item) {
+    this.formatOutputDate = item;
+  }
+
+  selectFormatI(item) {
+    console.log(item);
+    this.formatInputDate = item;
+  }
+
+  outPutF(event) {
+    this.outDate = event;
+  }
 
   showDate() {
     this.outFormat = true;
