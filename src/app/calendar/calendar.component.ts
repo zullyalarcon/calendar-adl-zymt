@@ -8,7 +8,8 @@ import * as moment from 'moment';
 })
 export class CalendarComponent implements OnInit, AfterViewInit {
 
-  @Input() format;
+  @Input() formatInput;
+  @Input() formatOutput;
 
   year: any;
   month: any;
@@ -54,6 +55,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
       'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     this.invalid = '';
+
     this.getYears();
     this.getMonths();
 
@@ -65,7 +67,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   orderFormatDate() {
-    switch (this.format) {
+    switch (this.formatInput) {
       case 'YYYY/MM/DD':
         this.formatDate = [
           {name: 'year', placeholder: 'AÑO', required: 'required', readonly: '', tabIndex: '1', type: 'number'},
@@ -129,10 +131,11 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         const yearCu = paramDate.getFullYear() - i;
         this.yearList.push(yearCu);
       }
-    } else {
+    } else if (this.year !== '') {
       // this.invalid = 'error-input';
       (document.getElementById('month') as HTMLInputElement).value = '';
       (document.getElementById('day') as HTMLInputElement).value = '';
+      (document.getElementById('month') as HTMLInputElement).disabled = true;
       for (let i = 0; i < 25; i++) {
         const yearCu = this.today.getFullYear() - i;
         this.yearList.push(yearCu);
@@ -179,6 +182,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
       this.year = event.target.value;
       this.selectYear = arrayEventSuggestions[0];
+      (document.getElementById('month') as HTMLInputElement).disabled = false;
     }
 
     if (event.target.id === 'month') {
@@ -193,10 +197,13 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         }
       });
 
-      this.month = event.target.value;
-      this.selectMonth = arrayEventSuggestions[0].id;
-      (document.getElementById('month') as HTMLInputElement).disabled = false;
-      (document.getElementById('day') as HTMLInputElement).disabled = false;
+      if (this.month > 12) {
+        this.month = event.target.value;
+        this.selectMonth = arrayEventSuggestions[0].id;
+        (document.getElementById('day') as HTMLInputElement).disabled = false;
+      } else {
+        (document.getElementById('day') as HTMLInputElement).disabled = true;
+      }
     }
 
     if (event.target.id === 'year' && arrayEventSuggestions.length === 0 ) {
@@ -240,7 +247,6 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   }
 
   focusDisplay(eventF) {
-    console.log(eventF);
     if (eventF.target.id === 'year') {
       this.pickList = this.yearList;
       this.pickYear = true;
