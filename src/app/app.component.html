@@ -1,23 +1,24 @@
 
-<h2 class="appTitle">Calendar</h2>
-
+<h2 class="title">Calendario ADL</h2>
 <div>
     <div>
         <app-calendar [format]='"YYYY/MM/DD"'></app-calendar>
     </div>
     <form class="form-group" formGroup="formG">
-        <div class="form-group">
+        <div class="form-group demoCalendar">
             <label for="formatSel">Selecciona el formato de salida:  </label>
-            <select class="form-control" id="formatSel" required>
+            <select class="form-control demoCalendar_select" id="formatSel" required>
                 <option *ngFor="let item of comboFormats" [value]="item">{{ item }}</option>
             </select>
         </div>
-        <button type="button" class="btn" (click)="showDate()">Ver Fecha Salida</button>
+        <button type="button" alt="Ver Fecha Salida" class="demoCalendar_btn" (click)="showDate()">Ver Fecha Salida</button>
     </form>
+    <div *ngIf="outFormat" class="demoCalendar">
+        <p>
+            Salida con formato: {{ format }} es : {{ outDate }}
+        </p>
+    </div>
 </div>
+<h5 class="footer">@By ZullyA & YennyG</h5>
 
-<div *ngIf="outFormat">
-    <p>
-        Salida con formato: {{ format }} es : {{ outDate }}
-    </p>
-</div>
+
